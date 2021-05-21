@@ -4,8 +4,8 @@ let state= 'title';
 let cnv;
 let points = 1;
 let lives = 3;
-let w = 600;
-let h = 600;
+let w = 540;
+let h = 540;
 let player;
 let coins = [];
 let enemies = [];
@@ -20,11 +20,15 @@ let playerJSON;
 let coinJSON;
 let playerAnimation = [];
 let coinAnimation = [];
-
+var gif_loadImg, gif_createImg;
 
 function preload(){
+gif_loadImg = loadImage("illustration3.gif");
+gif_createImg = createImg("illustration.gif");
+
+
 playerImg = loadImage('assets/slime.png');
-coinImg = loadImage('assets/point.png');
+coinImg = loadImage('assets/mage.png');
 enemyImg = loadImage('assets/potential.png');
 
 playerSS = loadImage('assets/spritesheet.png');
@@ -64,7 +68,8 @@ projectiles.push(new Projectile());
 }
 
 function draw(){
-
+image(gif_loadImg,270, 270);
+gif_createImg.position(500,350);
 switch(state){
   case 'title':
   title();
@@ -146,7 +151,7 @@ state = 'title'
 }
 
 function level1(){
-background(50,50,200);
+
 //text('click for points',w/2,h-30);
 if(random(1) <= 0.01){
 coins.push(new Coin());
@@ -225,7 +230,7 @@ if (projectiles[i] && dist(projectiles[i].x, projectiles[i].y, enemies[j].x, ene
 
 text(`ponits: ${points}`, w/4, h-30);
 
-if (points >= 30){
+if (points >= 50){
   state = 'you win!!';
 }else if (points <= 0){
   state = 'gameOver'
@@ -236,7 +241,7 @@ function level1MouseClicked(){
 
 points++;
 console.log('points = '+ points);
-if (points >=10){
+if (points >=100){
   state = 'you win!!'
 }
 }
