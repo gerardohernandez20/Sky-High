@@ -22,10 +22,15 @@ let playerAnimation = [];
 let coinAnimation = [];
 var gif_loadImg, gif_createImg;
 
-function preload(){
-gif_loadImg = loadImage("illustration3.gif");
-gif_createImg = createImg("illustration.gif");
+var shootSound;
+var music;
+var celebrate;
 
+function preload(){
+
+shootSound = loadSound("sounds/squirt.mp3");
+music = loadSound("sounds/music.mp3");
+celebrate = loadSound("sounds/celebrate.mp3");
 
 playerImg = loadImage('assets/slime.png');
 coinImg = loadImage('assets/mage.png');
@@ -34,6 +39,9 @@ enemyImg = loadImage('assets/potential.png');
 playerSS = loadImage('assets/spritesheet.png');
 playerJSON = loadJSON('assets/spritesheet.json');
 
+
+gif_loadImg = loadImage("illustration3.gif");
+gif_createImg = createImg("illustration.gif");
 //image for projectile here
 }
 
@@ -45,7 +53,10 @@ function setup(){
 
   imageMode(CENTER);
 textFont('monospace');
-
+music.play();
+music.setVolume(0.2);
+shootSound.setVolume(0.2);
+celebrate.setVolume(0.7);
 
 let playerFrames = playerJSON.frames;
 
@@ -102,6 +113,7 @@ player.direction = 'up'
   player.direction = 'down'
 }else if (key == ' '){
   projectiles.push(new Projectile);
+  shootSound.play();
 } else if (key = ' '){
   player.direction = 'still';
 
@@ -140,6 +152,8 @@ function title(){
   fill(280);
   textAlign(CENTER);
   text('SkyHigh',w/2,h/5);
+
+celebrate.stop();
 
   textSize(40);
   text('click anywhere to start',w/2,h/2);
@@ -232,6 +246,9 @@ text(`ponits: ${points}`, w/4, h-30);
 
 if (points >= 50){
   state = 'you win!!';
+  music.stop();
+  shootSound.stop();
+  celebrate.play();
 }else if (points <= 0){
   state = 'gameOver'
 }
